@@ -9,9 +9,46 @@ function traverse(fab){
   
 }
 
-// find parent && push into children
-function insert(child,parent){
-  
+// find && return cloned parent
+function parent(tree,child,prevParent){
+  return tree.match(
+    function(){},
+    function(i){
+      if (prevParent && (i.name() === item(child).name())) {
+        return prevParent;
+      }      
+    },
+    function(i,cs){
+      if (prevParent && (i.name() === item(child).name())) {
+        return prevParent;
+      }
+      return cs.reduce(function(acc,curr){
+        return acc || parent(curr,child,node(i,cs));
+      },null);
+    }
+  );
+}
+
+// recognize parent, push child into children - mutation!!!
+function insert(tree,child,parent){
+  tree.match(
+    function(){},
+    function(i){}, // TODO - handle case when parent is still a leaf
+    function(i,cs){
+      if (i.name() === item(parent).name()) {
+        cs.push(child);
+        return;
+      }
+      cs.forEach(function(c){ // TODO - exit loop after insert
+        insert(c,child,parent);
+      });
+    }
+  );
+}
+
+// recognize parent, clone, push child into children - pure!!
+function insertion(tree,child,parent){
+  return tree; // TODO - complete me!
 }
 
 // tree = empty || leaf || node
@@ -46,8 +83,8 @@ function node(item,children){
 function item(tree){
   return tree.match(
     function(){ return null; },
-    function(item){ return item; },
-    function(item,children){ return item; }
+    function(i){ return i; },
+    function(i,cs){ return i; }
   );
 }
 
@@ -59,12 +96,22 @@ function children(tree){
   );
 }
 
+function child(tree){
+  return function(pos){
+    return children(tree)[pos];
+  }
+}
+
+function subtree(tree,navigation){
+  return navigation(tree);
+}
+
 // count items
 function count(tree){
   return tree.match(
     function(){ return 0; },
     function(item){ return 1; },
-    function(item,children){ 
+    function(item,children){
       return children.reduce(function(acc,curr){ 
         return acc + count(curr);
       },1);

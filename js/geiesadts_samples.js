@@ -24,6 +24,14 @@ var sdk = newItem('sdk');
 var sms = newItem('sms');
 var desktop = newItem('desktop');
 
+var leaf1 = leaf(cp_tmobile);
+var leaf2 = leaf(sms);
+
+var subtree1 = node(route3,[
+  leaf(sdk),
+  leaf2
+]);
+
 var tree1 = node(colombia,[
   leaf(pp_1_euro),
   node(pp_2_euro,[
@@ -31,12 +39,9 @@ var tree1 = node(colombia,[
       node(cp_vodafone,[
         leaf(route1),
         leaf(route2),
-        node(route3,[
-          leaf(sdk),
-          leaf(sms)
-        ])
+        subtree1
       ]),
-      leaf(cp_tmobile)
+      leaf1
     ]),
     leaf(conn2)
   ])
