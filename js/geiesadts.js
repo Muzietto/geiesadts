@@ -1,12 +1,12 @@
 
+////////// TREE ////////////
+
 // e.g. all children filtered
 function all(predicate){
-  
 }
 
 // e.g. modify all children
 function traverse(fab){
-  
 }
 
 // find && return cloned parent
@@ -131,9 +131,61 @@ function depth(tree){
   );
 }
 
-// mutable
+////////// MAYBE ////////////
+function some(item){
+  if (item === null
+   || item === NaN
+   || item === Infinity
+   || typeof item === 'undefined') {
+    return none();
+  }
+  var result = function(w){
+    return w(item);
+  }
+  result.match = function(s,n){
+    return s(item);
+  }
+  return result;
+}
+
+function none(){
+  var result = function(w){
+    return w();
+  }
+  result.match = function(s,n){
+    return n();
+  }
+  return result;
+}
+
+function maybe_fmap(maybe,fun){
+  return maybe.match(
+    function(i){ 
+      try {
+        return some(fun(i));
+      } catch (e) {
+        return none();
+      }
+    },
+    function(){ return none(); }
+  );
+}
+
+function isSome(maybe){
+  return maybe.match(
+    function(){ return true; },
+    function(){ return false; }
+  );
+}
+function isNone(maybe){
+  return maybe.match(
+    function(){ return false; },
+    function(){ return true; }
+  );
+}
+
+// mutable thing
 function newItem(name){
   return { name:function(){ return name}, filtered: false };
 }
-
 // TODO - create pseudo-mutable items using pure functions

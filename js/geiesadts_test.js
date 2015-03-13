@@ -1,15 +1,50 @@
 
 describe("an algebraic data structure", function () {
   beforeEach(function () {
-    
   });
-//  expect(minElem(res)).to.be.null;
-//  expect(minElem(res)).to.be.equal(12);
-//  expect(balanced(res)).to.be.true;
 
-  describe("when is an empty||leaf||node tree", function () {
+  describe("when is a left e|right a either", function () {
+  });
+  
+  describe("when is a some|none maybe", function () {
     beforeEach(function () {
+      this.maybeA = some(newItem(1));
+      expect(isSome(this.maybeA)).to.be.true;
+      expect(isNone(this.maybeA)).to.be.false;
+      this.maybeB = some(null);
+      expect(isSome(this.maybeB)).to.be.false;
+      expect(isNone(this.maybeB)).to.be.true;
+    });
+    it('may be matched to get fmapped once',function(){
+      this.fmappedAA = maybe_fmap(this.maybeA,function(a){ return a+a; });
+      expect(isSome(this.fmappedAA)).to.be.true;
+      this.fmappedAB = maybe_fmap(this.maybeA,function(a){ throw a+a; });
+      expect(isSome(this.fmappedAB)).to.be.false;
+      this.fmappedBA = maybe_fmap(this.maybeB,function(a){ return a+a; });
+      expect(isSome(this.fmappedBA)).to.be.false;
+      this.fmappedBB = maybe_fmap(this.maybeB,function(a){ throw a+a; });
+      expect(isSome(this.fmappedBB)).to.be.false;
+    });
+    it('may be matched to get fmapped twice',function(){
+      this.fmappedAAA = maybe_fmap(this.fmappedAA,function(a){ return a+a; });
+      expect(isSome(this.fmappedAAA)).to.be.true;
+      this.fmappedAAB = maybe_fmap(this.fmappedAA,function(a){ throw a+a; });
+      expect(isSome(this.fmappedAAB)).to.be.false;
+      this.fmappedABA = maybe_fmap(this.fmappedAB,function(a){ return a+a; });
+      expect(isSome(this.fmappedAB)).to.be.false;
+      this.fmappedBAB = maybe_fmap(this.fmappedBA,function(a){ throw a+a; });
+      expect(isSome(this.fmappedBAB)).to.be.false;
+      this.fmappedBAA = maybe_fmap(this.fmappedBA,function(a){ return a+a; });
+      expect(isSome(this.fmappedBAA)).to.be.false;
+      this.fmappedBBA = maybe_fmap(this.fmappedBB,function(a){ return a+a; });
+      expect(isSome(this.fmappedBBA)).to.be.false;
+      this.fmappedBBB = maybe_fmap(this.fmappedBB,function(a){ throw a+a; });
+      expect(isSome(this.fmappedBBB)).to.be.false;
+    });
+  });
 
+  describe("when is an empty|leaf|node tree", function () {
+    beforeEach(function () {
     });
     it('may be traversed to count its items', function () {
       expect(count(empty())).to.be.equal(0);
