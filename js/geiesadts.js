@@ -158,16 +158,16 @@ function none(){
   return result;
 }
 
-function maybe_fmap(maybe,fun){
+function maybe_fmap(maybe,fab){
   return maybe.match(
     function(i){ 
       try {
-        return some(fun(i));
+        return some(fab(i));
       } catch (e) {
         return none();
       }
     },
-    function(){ return none(); }
+    function(){ return maybe; }
   );
 }
 
@@ -179,6 +179,53 @@ function isSome(maybe){
 }
 function isNone(maybe){
   return maybe.match(
+    function(){ return false; },
+    function(){ return true; }
+  );
+}
+
+////////// EITHER /////////////
+function left(error){
+  var result = function(w){
+    return w(error);
+  }
+  result.match = function(l,r){
+    return l();
+  }
+  return result;
+}
+
+function right(value){
+  var result = function(w){
+    return w(value);
+  }
+  result.match = function(l,r){
+    return r(value);
+  }
+  return result;
+}
+
+function either_fmap(either,fab){
+  return either.match(
+    function(){ return either; },
+    function(value){
+      try {
+        return right(fab(value));
+      } catch (error) {
+        return left(error);
+      }
+    }
+  );
+}
+
+function isLeft(either){
+  return either.match(
+    function(){ return true; },
+    function(){ return false; }
+  );
+}
+function isRight(either){
+  return either.match(
     function(){ return false; },
     function(){ return true; }
   );

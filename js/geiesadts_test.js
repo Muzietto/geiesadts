@@ -4,16 +4,29 @@ describe("an algebraic data structure", function () {
   });
 
   describe("when is a left e|right a either", function () {
+    beforeEach(function () {
+      this.eitherR = right(newItem(1));
+      this.eitherL = left(new Error('ouch!'));
+    });
+    it('satisfies some minimal conditions',function(){
+      expect(isRight(this.eitherR)).to.be.true;
+      expect(isLeft(this.eitherR)).to.be.false;
+      expect(isRight(this.eitherL)).to.be.false;
+      expect(isLeft(this.eitherL)).to.be.true;
+    });
+    // TODO: put fmapping once and twice
   });
   
   describe("when is a some|none maybe", function () {
     beforeEach(function () {
       this.maybeA = some(newItem(1));
+      this.maybeB = some(null);
+    });
+    it('satisfies some minimal conditions',function(){
       expect(isSome(this.maybeA)).to.be.true;
       expect(isNone(this.maybeA)).to.be.false;
-      this.maybeB = some(null);
       expect(isSome(this.maybeB)).to.be.false;
-      expect(isNone(this.maybeB)).to.be.true;
+      expect(isNone(this.maybeB)).to.be.true;      
     });
     it('may be matched to get fmapped once',function(){
       this.fmappedAA = maybe_fmap(this.maybeA,function(a){ return a+a; });
