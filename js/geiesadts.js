@@ -190,7 +190,7 @@ function left(error){
     return w(error);
   }
   result.match = function(l,r){
-    return l();
+    return l(error);
   }
   return result;
 }

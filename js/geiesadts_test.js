@@ -7,6 +7,8 @@ describe("an algebraic data structure", function () {
     beforeEach(function () {
       this.eitherR = right(newItem(1));
       this.eitherL = left(new Error('ouch!'));
+      this.returningFun = function(a){ return a+a; }
+      this.throwingFun = function(a){ throw a+a; }
     });
     it('satisfies some minimal conditions',function(){
       expect(isRight(this.eitherR)).to.be.true;
@@ -14,7 +16,34 @@ describe("an algebraic data structure", function () {
       expect(isRight(this.eitherL)).to.be.false;
       expect(isLeft(this.eitherL)).to.be.true;
     });
-    // TODO: put fmapping once and twice
+    it('may be matched to get fmapped once',function(){
+      this.fmappedRR = either_fmap(this.eitherR,this.returningFun);
+      expect(isRight(this.fmappedRR)).to.be.true;
+      this.fmappedRL = either_fmap(this.eitherR,this.throwingFun);
+      expect(isLeft(this.fmappedRL)).to.be.true;
+      this.fmappedLR = either_fmap(this.eitherL,this.returningFun);
+      expect(isLeft(this.fmappedLR)).to.be.true;
+      this.fmappedLL = either_fmap(this.eitherL,this.throwingFun);
+      expect(isLeft(this.fmappedLL)).to.be.true;
+    });
+    it('may be matched to get fmapped twice',function(){
+      this.fmappedRRR = either_fmap(this.fmappedRR,this.returningFun);
+      expect(isRight(this.fmappedRR)).to.be.true;
+      this.fmappedRRL = either_fmap(this.fmappedRR,this.throwingFun);
+      expect(isRight(this.fmappedRR)).to.be.true;
+      this.fmappedRLR = either_fmap(this.fmappedRL,this.returningFun);
+      expect(isLeft(this.fmappedRL)).to.be.true;
+      this.fmappedRLL = either_fmap(this.fmappedRL,this.throwingFun);
+      expect(isLeft(this.fmappedRL)).to.be.true;
+      this.fmappedLRR = either_fmap(this.fmappedLR,this.returningFun);
+      expect(isLeft(this.fmappedLR)).to.be.true;
+      this.fmappedLRL = either_fmap(this.fmappedLR,this.throwingFun);
+      expect(isLeft(this.fmappedLR)).to.be.true;
+      this.fmappedLLR = either_fmap(this.fmappedLL,this.returningFun);
+      expect(isLeft(this.fmappedLL)).to.be.true;
+      this.fmappedLLL = either_fmap(this.fmappedLL,this.throwingFun);
+      expect(isLeft(this.fmappedLL)).to.be.true;
+    });
   });
   
   describe("when is a some|none maybe", function () {
