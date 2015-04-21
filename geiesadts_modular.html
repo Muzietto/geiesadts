@@ -5,25 +5,28 @@
         <title>JS ADT's</title>
         <link rel="stylesheet" type="text/css" href="js/lib/mocha.css">
 
+    <script data-main="./js_modular/spec-runner" src="./js_modular/lib/require.js"></script>
+
+<!--
         <script type="text/javascript" src="js/lib/sinon-1.11.1.js"></script>
         <script type="text/javascript" src="js/lib/chai.js"></script>
         <script type="text/javascript" src="js/lib/mocha.js"></script>
 
-        <!--script>mocha.setup('bdd')</script-->
-        <!--script>
+        <script>mocha.setup('bdd')</script>
+        <script>
           function assert(expr, msg) {
             if (!expr) throw new Error(msg || 'failed');
           }
         </script-->
 
+<!--
         <script type="text/javascript" src="js/geiesadts.js"></script>
         <script type="text/javascript" src="js/geiesadts_samples.js"></script>
         <script type="text/javascript" src="js/geiesadts_test.js"></script>
-
+-->
         <script type="text/javascript">
               onload = function(){
-              
-                var runner = mocha.run();
+                //var runner = require('mocha').run();
                 // runner.globals(['foo', 'bar', 'baz']);
 
                 // runner.on('test end', function(test){

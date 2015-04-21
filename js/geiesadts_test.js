@@ -1,4 +1,6 @@
 
+mocha.setup('bdd');
+
 describe("an algebraic data structure", function () {
   beforeEach(function () {
   });
