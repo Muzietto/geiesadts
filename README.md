@@ -3,7 +3,7 @@
 
 Experimenting with algebraic data structures in JavaScript and in ECMAScript 6, using arrow functions.
 
-Clone/download, doubleclick on `geiesadts.html` or `geiesadts_ec6.html` and start exploring.
+Clone/download, doubleclick on `geiesadts.html` or `geiesadts_es6.html` and start exploring.
 
 NB - check out your browser's ES6 compliance at `https://kangax.github.io/compat-table/es6/`
 
