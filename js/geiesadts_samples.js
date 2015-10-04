@@ -1,4 +1,3 @@
-var expect = chai.expect;
 
 var colombia = newItem('CO')
 

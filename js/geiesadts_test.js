@@ -1,4 +1,4 @@
-
+var expect = chai.expect;
 mocha.setup('bdd');
 
 describe("an algebraic data structure", () => {
