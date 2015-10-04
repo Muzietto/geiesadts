@@ -1,0 +1,41 @@
+﻿<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+        <title>EC6 JS ADT's</title>
+        <link rel="stylesheet" type="text/css" href="js/lib/mocha.css">
+
+        <script type="text/javascript" src="js/lib/sinon-1.11.1.js"></script>
+        <script type="text/javascript" src="js/lib/chai.js"></script>
+        <script type="text/javascript" src="js/lib/mocha.js"></script>
+
+        <!--script>mocha.setup('bdd')</script-->
+        <!--script>
+          function assert(expr, msg) {
+            if (!expr) throw new Error(msg || 'failed');
+          }
+        </script-->
+
+        <script type="text/javascript" src="js/geiesadts_ec6.js"></script>
+        <script type="text/javascript" src="js/geiesadts_samples.js"></script>
+        <script type="text/javascript" src="js/geiesadts_test.js"></script>
+
+        <script type="text/javascript">
+              onload = function(){
+              
+                var runner = mocha.run();
+                // runner.globals(['foo', 'bar', 'baz']);
+
+                // runner.on('test end', function(test){
+                //   console.log(test.fullTitle());
+                // });
+              };
+        </script>
+    </head>
+    <body>
+        <h1 style="margin-left:20px;">geiesadts test using EcmaScript6</h1>
+        <h3 style="margin-left:20px;">(watch out your browser at https://kangax.github.io/compat-table/es6/)</h3>
+        <div id="mocha"></div>
+    </body>
+</html>
+ 
