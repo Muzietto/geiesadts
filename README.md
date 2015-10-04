@@ -1,4 +1,6 @@
-# geiesadts - ECMAScript sandbox for arrow functions
+# geiesadts
+## ECMAScript sandbox for arrow functions
+
 Experimenting with algebraic data structures in JavaScript and in ECMAScript 6, using arrow functions.
 
 Download, doubleclick on geiesadts.html or geiesadts_ec6.html and start exploring.
