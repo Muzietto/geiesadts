@@ -10,59 +10,43 @@
 ////////// TREE ////////////
 
 // e.g. all children filtered
-function all(predicate) {
-}
+var all = (tree, predicate) => { /* implement me */ }
 
 // e.g. modify all children
-function traverse(fab) {
-}
+var traverse = (tree, fab) => { /* implement me */ }
 
 // find && return cloned parent
 var parent = (tree, child, prevParent) => tree.match(
-    () => {},
-    (i) => (prevParent && (i.name() === item(child).name())) ? prevParent : undefined,
-    (i, cs) => (prevParent && (i.name() === item(child).name())) 
-                ? prevParent 
-                : cs.reduce((acc, curr) => acc || parent(curr, child, node(i, cs)), null)
-  );
+  () => {},
+  (i) => (prevParent && (i.name() === item(child).name())) ? prevParent : undefined,
+  (i, cs) => (prevParent && (i.name() === item(child).name())) 
+              ? prevParent 
+              : cs.reduce((acc, curr) => acc || parent(curr, child, node(i, cs)), null)
+);
 
 // recognize parent, push child into children - mutation!!!
-function insert(tree, child, parent) {
-  tree.match(
-    function() {},
-    function(i) {}, // TODO - handle case when parent is still a leaf
-    function(i, cs) {
-      if (i.name() === item(parent).name()) {
-        cs.push(child);
-        return;
-      }
-      cs.forEach(function(c) { // TODO - exit loop after insert
-        insert(c, child, parent);
-      });
+var insert = (tree, child, parent) => tree.match(
+  () => {},
+  (i) => {}, // TODO - handle case when parent is still a leaf
+  (i, cs) => {
+    if (i.name() === item(parent).name()) {
+      cs.push(child);
+      return;
     }
-  );
-}
+    cs.forEach(c => insert(c, child, parent)); // TODO - exit loop after insert
+  }
+);
+
 
 // recognize parent, clone, push child into children - pure!!
-function insertion(tree, child, parent) {
-  return tree; // TODO - complete me!
-}
+var insertion = (tree, child, parent) => tree; // TODO - complete me!
 
 // tree = empty || leaf || node
-var empty = () => builder()(
-  () => {},
-  (e, l, n) => e()
-);
+var empty = () => builder()(() => {}, (e, l, n) => e());
 
-var leaf = item => builder(item)(
-  w => w(item),
-  (e, l, n) => l(item)
-);
+var leaf = item => builder(item)(w => w(item), (e, l, n) => l(item));
 
-var node = (item, children) => builder(item, children)(
-  w => w(item, children),
-  (e, l, n) => n(item, children)
-);
+var node = (item, children) => builder(item, children)(w => w(item, children), (e, l, n) => n(item, children));
 
 var builder = (item, children) => (character, match) => {
   var result = character;
@@ -71,15 +55,15 @@ var builder = (item, children) => (character, match) => {
 }
 
 var item = tree => tree.match(
-    () => null,
-    (i) => i,
-    (i, cs) => i
+  () => null,
+  (i) => i,
+  (i, cs) => i
 );
 
 var children = tree => tree.match(
-    () => null,
-    item => null,
-    (item, children) => children
+  () => null,
+  item => null,
+  (item, children) => children
 );
 
 var child = tree => pos => children(tree)[pos];
@@ -87,132 +71,60 @@ var child = tree => pos => children(tree)[pos];
 var subtree = (tree, navigation) => navigation(tree);
 
 // count items
-function count(tree) {
-  return tree.match(
-    function() { return 0; },
-    function(item) { return 1; },
-    function(item, children) {
-      return children.reduce(function(acc, curr) { 
-        return acc + count(curr);
-      },1);
-    }
-  );
-}
+var count = tree => tree.match(
+  () => 0,
+  item => 1,
+  (item, children) => children.reduce((acc, curr) => acc + count(curr),1)
+);
 
-function depth(tree) {
-  return tree.match(
-    function() { return 0; },
-    function(item) { return 1; },
-    function(item, children) {
-      return 1 + children.reduce(function(acc, curr) {
-        return Math.max(acc, depth(curr));
-      },0);
-    }
-  );
-}
+var depth = tree => tree.match(
+  () => 0,
+  item => 1,
+  (item, children) => 1 + children.reduce((acc, curr) => Math.max(acc, depth(curr)),0)
+);
 
 ////////// MAYBE ////////////
-function some(item) {
+var some = item => {
   if (item === null
    || item === NaN
    || item === Infinity
    || typeof item === 'undefined') {
     return none();
   }
-  var result = function(w) {
-    return w(item);
-  }
-  result.match = function(s, n) {
-    return s(item);
-  }
-  return result;
+  return builder(item)(w => w(item), (s, n) => s(item));
 }
 
-function none() {
-  var result = function(w) {
-    return w();
+var none = () => builder()(w => w(), (s, n) => n());
+
+var maybe_fmap = (maybe, fab) => maybe.match(
+  i => tryCatch(() => some(fab(i)), () => none()),
+  () => maybe
+);
+
+var tryCatch = (tryClause, catchClause) => {
+  try {
+    return tryClause();
+  } catch (e) {
+    return catchClause(e);
   }
-  result.match = function(s, n) {
-    return n();
-  }
-  return result;
 }
 
-function maybe_fmap(maybe, fab) {
-  return maybe.match(
-    function(i) { 
-      try {
-        return some(fab(i));
-      } catch (e) {
-        return none();
-      }
-    },
-    function() { return maybe; }
-  );
-}
-
-function isSome(maybe) {
-  return maybe.match(
-    function() { return true; },
-    function() { return false; }
-  );
-}
-function isNone(maybe) {
-  return maybe.match(
-    function() { return false; },
-    function() { return true; }
-  );
-}
+var isSome = maybe => maybe.match(() => true, () => false);
+var isNone = maybe => maybe.match(() => false, () => true);
 
 ////////// EITHER /////////////
-function left(error) {
-  var result = function(w) {
-    return w(error);
-  }
-  result.match = function(l, r) {
-    return l(error);
-  }
-  return result;
-}
+var left = error => builder()((w) => w(error), (l, r) => l(error));
+var right = value => builder()((w) => w(value), (l, r) => r(value));
 
-function right(value) {
-  var result = function(w) {
-    return w(value);
-  }
-  result.match = function(l, r) {
-    return r(value);
-  }
-  return result;
-}
+var either_fmap = (either, fab) => either.match(
+  () => either,
+  value => tryCatch(() => right(fab(value)), (error) => left(error))
+);
 
-function either_fmap(either, fab) {
-  return either.match(
-    function() { return either; },
-    function(value) {
-      try {
-        return right(fab(value));
-      } catch (error) {
-        return left(error);
-      }
-    }
-  );
-}
-
-function isLeft(either) {
-  return either.match(
-    function() { return true; },
-    function() { return false; }
-  );
-}
-function isRight(either) {
-  return either.match(
-    function() { return false; },
-    function() { return true; }
-  );
-}
+var isLeft = either => either.match(() => true, () => false);
+var isRight = either => either.match(() => false, () => true);
 
 // mutable thing
-function newItem(name) {
-  return { name:function() { return name}, filtered: false };
-}
+var newItem = name => ({ name : () => name, filtered : false });
+
 // TODO - create pseudo-mutable items using pure functions
