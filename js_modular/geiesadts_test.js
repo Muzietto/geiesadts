@@ -1,6 +1,10 @@
 
 define(['require', 'exports', 'chai', './geiesadts', './geiesadts_samples'], 
   (function(require, exports, chai, adts, samples) {
+    runtests(require, exports, chai, adts, samples);
+  }));
+
+function runtests(require, exports, chai, adts, samples) {
 
   var 
     expect = chai.expect,
@@ -146,11 +150,11 @@ define(['require', 'exports', 'chai', './geiesadts', './geiesadts_samples'],
           leaf(sdk),
           leaf22
         ]);
-        
+
         expect(children(subtree11).length).to.be.equal(2);
         expect(child(subtree11)(1)).to.be.equal(leaf22);
         expect(item(child(subtree11)(1)).name()).to.be.equal('sms');
-        
+
         function child2nd(tree){
           return child(tree)(1);
         }
@@ -191,17 +195,17 @@ define(['require', 'exports', 'chai', './geiesadts', './geiesadts_samples'],
           leaf(sdk),
           leaf22
         ]);
-        
+
         var foundParent = parent(subtree11,leaf22);
         expect(item(foundParent).name()).to.be.equal('route3');
       });
       it('may be traversed to find the parent of a given child - HARD',function(){
         var node_conn1 = child(child(tree1)(1))(0);
         var child1 = child(child(child(tree1)(1))(0))(2);
-        
+
         var foundParent = parent(tree1,child1);
         expect(item(foundParent).name()).to.be.equal(item(node_conn1).name());
       });
     })
   });
-}));
+}
