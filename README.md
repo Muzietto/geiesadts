@@ -1,4 +1,4 @@
-# geiesadt ( _j_-_s_-ADT's)
+# geiesadts ( _j_-_s_-ADT's)
 
 ### ECMAScript sandbox for arrow functions
 
