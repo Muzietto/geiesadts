@@ -4,9 +4,9 @@
 
 Experimenting with algebraic data structures in JavaScript and in ECMAScript 6, using arrow functions.
 
-JavaScript tests are [here](http://rawgit.com/Muzietto/geieadts/master/geieadts.html).
+JavaScript tests are [here](http://rawgit.com/Muzietto/geiesadts/master/geiesadts.html).
 
-ES6 tests are [here](http://rawgit.com/Muzietto/geieadts/master/geieadts_es6.html).
+ES6 tests are [here](http://rawgit.com/Muzietto/geiesadts/master/geiesadts_es6.html).
 
 NB - check out your browser's ES6 compliance at `https://kangax.github.io/compat-table/es6/`
 
