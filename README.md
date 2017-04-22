@@ -22,4 +22,4 @@ node item1 [
 ] 
 ```
 
-NB: this project features also a browser test setup using `require.js`; see [`geiesadts_modular.html`](http://rawgit.com/Muzietto/geieadts/master/geieadts_modular.html)
+NB: this project features also a browser test setup using `require.js`; see [`geiesadts_modular.html`](http://rawgit.com/Muzietto/geieasdts/master/geiesadts_modular.html)
