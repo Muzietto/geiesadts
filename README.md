@@ -4,7 +4,9 @@
 
 Experimenting with algebraic data structures in JavaScript and in ECMAScript 6, using arrow functions.
 
-Clone/download, doubleclick on `geiesadts.html` or `geiesadts_es6.html` and start exploring.
+JavaScript tests are [here](http://rawgit.com/Muzietto/geieadts/master/geieadts.html).
+
+ES6 tests are [here](http://rawgit.com/Muzietto/geieadts/master/geieadts_es6.html).
 
 NB - check out your browser's ES6 compliance at `https://kangax.github.io/compat-table/es6/`
 
@@ -20,4 +22,4 @@ node item1 [
 ] 
 ```
 
-NB: this project features also a browser test setup using `require.js`; see `geiesadts_modular.html`.
+NB: this project features also a browser test setup using `require.js`; see [`geiesadts_modular.html`](http://rawgit.com/Muzietto/geieadts/master/geieadts_modular.html)
